@@ -12,12 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -44,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private void loadMeme() {
         progressBar.setVisibility(View.VISIBLE);
         imageView.setVisibility(View.INVISIBLE);
-        RequestQueue queue = Volley.newRequestQueue(this);
         String url ="https://meme-api.herokuapp.com/gimme";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
             response -> {
@@ -68,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, error -> Log.d("Error", error.getMessage())
         );
-        queue.add(jsonObjectRequest);
+        VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
     public void shareMeme(View view) {
